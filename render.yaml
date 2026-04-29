@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: ias-srfp-2026-dashboard
+    runtime: static
+    buildCommand: bash scripts/build_static_site.sh
+    staticPublishPath: ./public
+    autoDeployTrigger: commit

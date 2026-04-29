@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IAS SRFP 2026 Selection Dashboard</title>
+  <style>
+    :root {
+      --ink: #17211f;
+      --muted: #64706d;
+      --line: #d9dfdc;
+      --paper: #f7f4ee;
+      --panel: #fffdf8;
+      --panel-strong: #f0ebe1;
+      --teal: #0d6b61;
+      --teal-soft: #cfe8e2;
+      --saffron: #d89422;
+      --berry: #9b3858;
+      --blue: #326c9a;
+      --green: #3f7d4a;
+      --red: #b94f45;
+      --shadow: 0 18px 38px rgba(23, 33, 31, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(13, 107, 97, 0.08), transparent 32%),
+        linear-gradient(315deg, rgba(216, 148, 34, 0.12), transparent 34%),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1440px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 36px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 20px;
+      padding: 18px 0 22px;
+      border-bottom: 1px solid rgba(23, 33, 31, 0.16);
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--teal);
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 820px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 4.7rem);
+      line-height: 0.95;
+      font-weight: 700;
+      letter-spacing: 0;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
+    .title-line {
+      display: inline;
+    }
+
+    .title-line + .title-line::before {
+      content: " ";
+    }
+
+    .source {
+      display: grid;
+      justify-items: end;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .source a {
+      color: var(--teal);
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 1px solid currentColor;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .metric {
+      min-height: 118px;
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 10px 20px rgba(23, 33, 31, 0.05);
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .metric .value {
+      margin-top: 12px;
+      font-size: 2.4rem;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .metric .note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+      min-width: 0;
+    }
+
+    .panel {
+      min-width: 0;
+      background: rgba(255, 253, 248, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .side {
+      min-width: 0;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(240, 235, 225, 0.72);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 0.94rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .panel-subtitle {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .subject-stack,
+    .affiliation-stack,
+    .institution-stack {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+    }
+
+    .subject-row,
+    .affiliation-row,
+    .institution-row {
+      display: grid;
+      gap: 7px;
+    }
+
+    .row-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .row-meta strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .bar-track {
+      height: 12px;
+      overflow: hidden;
+      background: #ebe7dd;
+      border: 1px solid rgba(23, 33, 31, 0.08);
+      border-radius: 999px;
+    }
+
+    .bar-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--teal);
+      transition: width 420ms ease;
+    }
+
+    .subject-row:nth-child(2) .bar-fill { background: var(--berry); }
+    .subject-row:nth-child(3) .bar-fill { background: var(--blue); }
+    .subject-row:nth-child(4) .bar-fill { background: var(--saffron); }
+    .subject-row:nth-child(5) .bar-fill { background: var(--green); }
+    .subject-row:nth-child(6) .bar-fill { background: var(--red); }
+
+    .filters {
+      display: grid;
+      grid-template-columns: minmax(140px, 1fr) minmax(150px, 1fr) minmax(120px, 0.75fr) minmax(130px, 0.75fr) minmax(140px, 0.75fr) auto auto;
+      gap: 10px;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .field {
+      position: relative;
+      min-width: 0;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+    }
+
+    .field input {
+      padding: 0 12px 0 38px;
+    }
+
+    .field select {
+      padding: 0 32px 0 12px;
+      appearance: none;
+    }
+
+    .search-mark {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--teal);
+      border-radius: 50%;
+      transform: translateY(-58%);
+      pointer-events: none;
+    }
+
+    .search-mark::after {
+      content: "";
+      position: absolute;
+      right: -7px;
+      bottom: -5px;
+      width: 7px;
+      height: 2px;
+      background: var(--teal);
+      transform: rotate(45deg);
+      transform-origin: center;
+    }
+
+    .select-mark {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: translateY(-65%) rotate(45deg);
+      pointer-events: none;
+    }
+
+    .control-button {
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid var(--ink);
+      border-radius: 6px;
+      color: var(--ink);
+      background: transparent;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .control-button.primary {
+      color: #fff;
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+
+    .control-button:hover,
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(13, 107, 97, 0.14);
+    }
+
+    .table-wrap {
+      max-height: 650px;
+      overflow: auto;
+      min-width: 0;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+    }
+
+    th,
+    td {
+      padding: 12px 13px;
+      border-bottom: 1px solid #edf0ee;
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.9rem;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      color: var(--muted);
+      background: #f7f4ee;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    tbody tr {
+      cursor: pointer;
+    }
+
+    tbody tr:hover,
+    tbody tr.active {
+      background: #f8fbfa;
+    }
+
+    .name-cell {
+      color: var(--ink);
+      font-weight: 850;
+    }
+
+    .code-pill {
+      display: inline-grid;
+      place-items: center;
+      min-width: 46px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: var(--teal);
+      background: var(--teal-soft);
+      font-size: 0.74rem;
+      font-weight: 900;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .detail {
+      display: grid;
+      gap: 9px;
+      padding: 16px;
+      border-top: 1px solid var(--line);
+      background: var(--panel-strong);
+    }
+
+    .detail-name {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.6rem;
+      line-height: 1.05;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .detail-item {
+      padding: 10px;
+      border: 1px solid rgba(23, 33, 31, 0.11);
+      border-radius: 6px;
+      background: rgba(255, 253, 248, 0.72);
+    }
+
+    .detail-label {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .detail-value {
+      margin-top: 5px;
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+
+    .empty {
+      padding: 54px 24px;
+      color: var(--muted);
+      text-align: center;
+      background: #fff;
+    }
+
+    .loader {
+      display: grid;
+      place-items: center;
+      min-height: 320px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .error {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid rgba(185, 79, 69, 0.35);
+      border-radius: 8px;
+      color: #7b2c25;
+      background: #fff1ef;
+    }
+
+    @media (max-width: 1120px) {
+      .metric-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: calc(100% - 20px);
+        max-width: 1440px;
+        padding-top: 12px;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+        line-height: 1.02;
+      }
+
+      .title-line {
+        display: block;
+      }
+
+      .title-line + .title-line::before {
+        content: "";
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .source {
+        justify-items: start;
+        white-space: normal;
+      }
+
+      .metric-grid,
+      .filters,
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metric {
+        min-height: 96px;
+      }
+
+      .metric .value {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Science Academies SRFP 2026</p>
+        <h1><span class="title-line">Selected candidate</span><span class="title-line">dashboard</span></h1>
+      </div>
+      <div class="source">
+        <span id="updatedLabel">Loading data</span>
+        <a href="https://webjapps.ias.ac.in/fellowship2026/lists/result1.jsp" target="_blank" rel="noreferrer">Source page</a>
+      </div>
+    </header>
+
+    <section class="metric-grid" aria-label="Selection metrics">
+      <article class="metric">
+        <div class="label">Total selected</div>
+        <div class="value" id="totalMetric">--</div>
+        <div class="note">Rows in selected people CSV</div>
+      </article>
+      <article class="metric">
+        <div class="label">Sections</div>
+        <div class="value" id="subjectMetric">--</div>
+        <div class="note">Subjects with published records</div>
+      </article>
+      <article class="metric">
+        <div class="label">Affiliations</div>
+        <div class="value" id="affiliationMetric">--</div>
+        <div class="note">Unique applicant institutions</div>
+      </article>
+      <article class="metric">
+        <div class="label">Largest section</div>
+        <div class="value" id="topSubjectMetric">--</div>
+        <div class="note" id="topSubjectNote">--</div>
+      </article>
+      <article class="metric">
+        <div class="label">Visible rows</div>
+        <div class="value" id="visibleMetric">--</div>
+        <div class="note">After filters and search</div>
+      </article>
+    </section>
+
+    <section class="dashboard">
+      <aside class="side">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Subject distribution</h2>
+              <div class="panel-subtitle">Counts by selected-list route</div>
+            </div>
+          </div>
+          <div class="subject-stack" id="subjectBars"></div>
+        </section>
+
+        <section class="panel" style="margin-top:16px;">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Applicant affiliations</h2>
+              <div class="panel-subtitle">Top source institutions in current view</div>
+            </div>
+          </div>
+          <div class="affiliation-stack" id="affiliationBars"></div>
+        </section>
+
+        <section class="panel" style="margin-top:16px;">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Guide institutions</h2>
+              <div class="panel-subtitle">Top destinations in current view</div>
+            </div>
+          </div>
+          <div class="institution-stack" id="institutionBars"></div>
+        </section>
+      </aside>
+
+      <section class="panel">
+        <div class="filters" aria-label="Dashboard filters">
+          <label class="field">
+            <span class="search-mark" aria-hidden="true"></span>
+            <input id="searchInput" type="search" placeholder="Search records">
+          </label>
+          <label class="field">
+            <span class="search-mark" aria-hidden="true"></span>
+            <input id="affiliationInput" type="search" placeholder="Affiliation">
+          </label>
+          <label class="field">
+            <select id="subjectFilter"></select>
+            <span class="select-mark" aria-hidden="true"></span>
+          </label>
+          <label class="field">
+            <select id="categoryFilter"></select>
+            <span class="select-mark" aria-hidden="true"></span>
+          </label>
+          <label class="field">
+            <select id="sortSelect">
+              <option value="subject">Sort by subject</option>
+              <option value="name">Sort by name</option>
+              <option value="application">Sort by application</option>
+              <option value="guideInstitution">Sort by guide institution</option>
+            </select>
+            <span class="select-mark" aria-hidden="true"></span>
+          </label>
+          <button class="control-button" id="resetButton" type="button">Reset</button>
+          <button class="control-button primary" id="exportButton" type="button">Export</button>
+        </div>
+
+        <div class="table-wrap" id="tableWrap">
+          <div class="loader">Loading selected-list CSV</div>
+        </div>
+
+        <section class="detail" id="detailPanel" aria-live="polite"></section>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const DATA_URL = "ias_srfp2026_selected_people.csv";
+
+    const subjectNames = {
+      Che: "Chemistry",
+      Eps: "Earth and Planetary Sciences",
+      Eng: "Engineering",
+      Lif: "Life Sciences",
+      Mat: "Mathematics",
+      Phy: "Physics"
+    };
+
+    const state = {
+      rows: [],
+      filtered: [],
+      activeId: null
+    };
+
+    const els = {
+      updatedLabel: document.getElementById("updatedLabel"),
+      totalMetric: document.getElementById("totalMetric"),
+      subjectMetric: document.getElementById("subjectMetric"),
+      affiliationMetric: document.getElementById("affiliationMetric"),
+      topSubjectMetric: document.getElementById("topSubjectMetric"),
+      topSubjectNote: document.getElementById("topSubjectNote"),
+      visibleMetric: document.getElementById("visibleMetric"),
+      subjectBars: document.getElementById("subjectBars"),
+      affiliationBars: document.getElementById("affiliationBars"),
+      institutionBars: document.getElementById("institutionBars"),
+      searchInput: document.getElementById("searchInput"),
+      affiliationInput: document.getElementById("affiliationInput"),
+      subjectFilter: document.getElementById("subjectFilter"),
+      categoryFilter: document.getElementById("categoryFilter"),
+      sortSelect: document.getElementById("sortSelect"),
+      resetButton: document.getElementById("resetButton"),
+      exportButton: document.getElementById("exportButton"),
+      tableWrap: document.getElementById("tableWrap"),
+      detailPanel: document.getElementById("detailPanel")
+    };
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i += 1) {
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"' && inQuotes && next === '"') {
+          cell += '"';
+          i += 1;
+        } else if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === "," && !inQuotes) {
+          row.push(cell);
+          cell = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && next === "\n") i += 1;
+          row.push(cell);
+          if (row.some((value) => value.length > 0)) rows.push(row);
+          row = [];
+          cell = "";
+        } else {
+          cell += char;
+        }
+      }
+
+      if (cell.length || row.length) {
+        row.push(cell);
+        if (row.some((value) => value.length > 0)) rows.push(row);
+      }
+
+      const headers = rows.shift() || [];
+      return rows.map((values, index) => {
+        const item = {};
+        headers.forEach((header, headerIndex) => {
+          item[header] = values[headerIndex] || "";
+        });
+        item.id = `${item.subject_code || "row"}-${item.application || index}`;
+        item.subjectLabel = subjectNames[item.subject_code] || titleCase(item.subject || "");
+        item.searchText = [
+          item.application,
+          item.name,
+          item.affiliation,
+          item.category,
+          item.guide,
+          item.guide_institution,
+          item.subjectLabel
+        ].join(" ").toLowerCase();
+        return item;
+      });
+    }
+
+    function titleCase(value) {
+      return value.toLowerCase().replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
+    }
+
+    function escapeHTML(value) {
+      return String(value || "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[char]);
+    }
+
+    function groupCount(rows, key) {
+      return rows.reduce((acc, row) => {
+        const label = row[key] || "Unknown";
+        acc[label] = (acc[label] || 0) + 1;
+        return acc;
+      }, {});
+    }
+
+    function formatDate(value) {
+      if (!value) return "Unknown update date";
+      const [year, month, day] = value.split("-");
+      return `${day}/${month}/${year}`;
+    }
+
+    function setOptions(select, options, defaultLabel) {
+      select.innerHTML = [
+        `<option value="">${defaultLabel}</option>`,
+        ...options.map((option) => `<option value="${escapeHTML(option.value)}">${escapeHTML(option.label)}</option>`)
+      ].join("");
+    }
+
+    function initializeFilters() {
+      const subjectOptions = Object.entries(groupCount(state.rows, "subject_code"))
+        .sort((a, b) => (subjectNames[a[0]] || a[0]).localeCompare(subjectNames[b[0]] || b[0]))
+        .map(([code, count]) => ({ value: code, label: `${subjectNames[code] || code} (${count})` }));
+
+      const categoryOptions = Object.entries(groupCount(state.rows, "category"))
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([category, count]) => ({ value: category, label: `${category} (${count})` }));
+
+      setOptions(els.subjectFilter, subjectOptions, "All subjects");
+      setOptions(els.categoryFilter, categoryOptions, "All categories");
+    }
+
+    function renderMetrics() {
+      const total = state.rows.length;
+      const subjects = Object.entries(groupCount(state.rows, "subject_code"))
+        .sort((a, b) => b[1] - a[1]);
+      const affiliations = Object.keys(groupCount(state.rows, "affiliation"))
+        .filter((label) => label && label !== "Unknown");
+      const top = subjects[0] || ["", 0];
+      const dates = [...new Set(state.rows.map((row) => row.last_updated).filter(Boolean))].sort();
+
+      els.totalMetric.textContent = total.toLocaleString("en-IN");
+      els.subjectMetric.textContent = subjects.length;
+      els.affiliationMetric.textContent = affiliations.length.toLocaleString("en-IN");
+      els.topSubjectMetric.textContent = subjectNames[top[0]] || "--";
+      els.topSubjectNote.textContent = `${top[1].toLocaleString("en-IN")} selected candidates`;
+      els.updatedLabel.textContent = `Last updated ${formatDate(dates[dates.length - 1])}`;
+    }
+
+    function renderSubjectBars() {
+      const counts = Object.entries(groupCount(state.rows, "subject_code"))
+        .sort((a, b) => b[1] - a[1]);
+      const max = Math.max(...counts.map((item) => item[1]), 1);
+
+      els.subjectBars.innerHTML = counts.map(([code, count]) => {
+        const pct = (count / max) * 100;
+        return `
+          <div class="subject-row">
+            <div class="row-meta">
+              <strong>${escapeHTML(subjectNames[code] || code)}</strong>
+              <span>${count.toLocaleString("en-IN")}</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderInstitutionBars(rows) {
+      const counts = Object.entries(groupCount(rows, "guide_institution"))
+        .filter(([label]) => label && label !== "Unknown")
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .slice(0, 8);
+      const max = Math.max(...counts.map((item) => item[1]), 1);
+
+      els.institutionBars.innerHTML = counts.map(([name, count]) => {
+        const pct = (count / max) * 100;
+        return `
+          <div class="institution-row">
+            <div class="row-meta">
+              <strong>${escapeHTML(name)}</strong>
+              <span>${count.toLocaleString("en-IN")}</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:var(--saffron);"></div></div>
+          </div>
+        `;
+      }).join("") || `<div class="empty">No institutions in current view</div>`;
+    }
+
+    function renderAffiliationBars(rows) {
+      const counts = Object.entries(groupCount(rows, "affiliation"))
+        .filter(([label]) => label && label !== "Unknown")
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .slice(0, 8);
+      const max = Math.max(...counts.map((item) => item[1]), 1);
+
+      els.affiliationBars.innerHTML = counts.map(([name, count]) => {
+        const pct = (count / max) * 100;
+        return `
+          <div class="affiliation-row">
+            <div class="row-meta">
+              <strong>${escapeHTML(name)}</strong>
+              <span>${count.toLocaleString("en-IN")}</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:var(--blue);"></div></div>
+          </div>
+        `;
+      }).join("") || `<div class="empty">No affiliations in current view</div>`;
+    }
+
+    function applyFilters() {
+      const query = els.searchInput.value.trim().toLowerCase();
+      const affiliationQuery = els.affiliationInput.value.trim().toLowerCase();
+      const subject = els.subjectFilter.value;
+      const category = els.categoryFilter.value;
+      const sort = els.sortSelect.value;
+
+      state.filtered = state.rows.filter((row) => {
+        const matchesQuery = !query || row.searchText.includes(query);
+        const matchesAffiliation = !affiliationQuery || row.affiliation.toLowerCase().includes(affiliationQuery);
+        const matchesSubject = !subject || row.subject_code === subject;
+        const matchesCategory = !category || row.category === category;
+        return matchesQuery && matchesAffiliation && matchesSubject && matchesCategory;
+      });
+
+      state.filtered.sort((a, b) => {
+        if (sort === "name") return a.name.localeCompare(b.name);
+        if (sort === "application") return a.application.localeCompare(b.application);
+        if (sort === "guideInstitution") return a.guide_institution.localeCompare(b.guide_institution) || a.name.localeCompare(b.name);
+        return a.subjectLabel.localeCompare(b.subjectLabel) || Number(a.serial) - Number(b.serial);
+      });
+
+      if (!state.filtered.some((row) => row.id === state.activeId)) {
+        state.activeId = state.filtered[0] ? state.filtered[0].id : null;
+      }
+
+      renderTable();
+      renderDetail();
+      renderAffiliationBars(state.filtered);
+      renderInstitutionBars(state.filtered);
+      els.visibleMetric.textContent = state.filtered.length.toLocaleString("en-IN");
+    }
+
+    function renderTable() {
+      if (!state.filtered.length) {
+        els.tableWrap.innerHTML = `<div class="empty">No matching selected candidates</div>`;
+        return;
+      }
+
+      const body = state.filtered.map((row) => `
+        <tr data-id="${escapeHTML(row.id)}" class="${row.id === state.activeId ? "active" : ""}">
+          <td><span class="code-pill">${escapeHTML(row.subject_code)}</span></td>
+          <td>${escapeHTML(row.application)}</td>
+          <td class="name-cell">${escapeHTML(row.name)}</td>
+          <td>${escapeHTML(row.affiliation)}</td>
+          <td>${escapeHTML(row.guide)}<br><span class="muted">${escapeHTML(row.guide_institution)}</span></td>
+          <td>${escapeHTML(row.category)}</td>
+        </tr>
+      `).join("");
+
+      els.tableWrap.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Application</th>
+              <th>Name</th>
+              <th>Affiliation</th>
+              <th>Guide / Institution</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>${body}</tbody>
+        </table>
+      `;
+
+      els.tableWrap.querySelectorAll("tbody tr").forEach((rowEl) => {
+        rowEl.addEventListener("click", () => {
+          state.activeId = rowEl.dataset.id;
+          renderTable();
+          renderDetail();
+        });
+      });
+    }
+
+    function renderDetail() {
+      const row = state.filtered.find((item) => item.id === state.activeId);
+      if (!row) {
+        els.detailPanel.innerHTML = "";
+        return;
+      }
+
+      els.detailPanel.innerHTML = `
+        <h2 class="detail-name">${escapeHTML(row.name)}</h2>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-label">Application</div>
+            <div class="detail-value">${escapeHTML(row.application)}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Subject</div>
+            <div class="detail-value">${escapeHTML(row.subjectLabel)}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Affiliation</div>
+            <div class="detail-value">${escapeHTML(row.affiliation)}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Guide</div>
+            <div class="detail-value">${escapeHTML(row.guide)}<br>${escapeHTML(row.guide_institution)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function exportFilteredRows() {
+      const headers = ["subject_code", "subject", "application", "name", "affiliation", "category", "guide", "guide_institution", "last_updated"];
+      const csv = [
+        headers.join(","),
+        ...state.filtered.map((row) => headers.map((header) => {
+          const value = String(row[header] || "").replace(/"/g, '""');
+          return `"${value}"`;
+        }).join(","))
+      ].join("\n");
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "ias_srfp2026_filtered_selection.csv";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    async function loadData() {
+      try {
+        const response = await fetch(DATA_URL, { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const text = await response.text();
+        state.rows = parseCSV(text);
+
+        initializeFilters();
+        renderMetrics();
+        renderSubjectBars();
+        applyFilters();
+      } catch (error) {
+        els.tableWrap.innerHTML = `
+          <div class="error">
+            Could not load ${DATA_URL}. Serve this folder over HTTP and reload the dashboard.
+          </div>
+        `;
+        els.updatedLabel.textContent = "CSV not loaded";
+      }
+    }
+
+    [els.searchInput, els.affiliationInput, els.subjectFilter, els.categoryFilter, els.sortSelect].forEach((element) => {
+      element.addEventListener("input", applyFilters);
+      element.addEventListener("change", applyFilters);
+    });
+
+    els.resetButton.addEventListener("click", () => {
+      els.searchInput.value = "";
+      els.affiliationInput.value = "";
+      els.subjectFilter.value = "";
+      els.categoryFilter.value = "";
+      els.sortSelect.value = "subject";
+      applyFilters();
+    });
+
+    els.exportButton.addEventListener("click", exportFilteredRows);
+
+    loadData();
+  </script>
+</body>
+</html>
