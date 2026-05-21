@@ -32,13 +32,13 @@ Conclusion: the candidate records are backend/server-rendered, not present as fr
 
 | Subject Code | Section | Route Result | Last Updated |
 | --- | --- | --- | --- |
-| Che | Chemistry | 176 selected candidates | 2026-05-21 |
-| Eps | Earth and Planetary Sciences | 40 selected candidates | 2026-05-20 |
+| Che | Chemistry | 179 selected candidates | 2026-05-21 |
+| Eps | Earth and Planetary Sciences | 41 selected candidates | 2026-05-21 |
 | Eng | Engineering including Computer Sciences | 300 selected candidates | 2026-05-21 |
 | Lif | Life Sciences | 300 selected candidates | 2026-05-21 |
 | Mat | Mathematics | 53 selected candidates | 2026-05-21 |
-| Phy | Physics | 135 selected candidates | 2026-05-21 |
+| Phy | Physics | 137 selected candidates | 2026-05-21 |
 
-Total selected rows found: 1004.
+Total selected rows found: 1010.
 
 All selected people are saved in `ias_srfp2026_selected_people.csv`.
