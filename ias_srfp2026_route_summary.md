@@ -2,7 +2,7 @@
 
 Source page: https://webjapps.ias.ac.in/fellowship2026/lists/result1.jsp
 
-Site data version: 2026-05-21
+Site data version: 2026-05-22
 
 ## Frontend Route
 
@@ -35,10 +35,10 @@ Conclusion: the candidate records are backend/server-rendered, not present as fr
 | Che | Chemistry | 179 selected candidates | 2026-05-21 |
 | Eps | Earth and Planetary Sciences | 41 selected candidates | 2026-05-21 |
 | Eng | Engineering including Computer Sciences | 300 selected candidates | 2026-05-21 |
-| Lif | Life Sciences | 300 selected candidates | 2026-05-21 |
-| Mat | Mathematics | 53 selected candidates | 2026-05-21 |
-| Phy | Physics | 137 selected candidates | 2026-05-21 |
+| Lif | Life Sciences | 300 selected candidates | 2026-05-22 |
+| Mat | Mathematics | 61 selected candidates | 2026-05-22 |
+| Phy | Physics | 161 selected candidates | 2026-05-22 |
 
-Total selected rows found: 1010.
+Total selected rows found: 1042.
 
 All selected people are saved in `ias_srfp2026_selected_people.csv`.
