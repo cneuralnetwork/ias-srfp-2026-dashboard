@@ -36,9 +36,9 @@ Conclusion: the candidate records are backend/server-rendered, not present as fr
 | Eps | Earth and Planetary Sciences | 49 selected candidates | 2026-06-09 |
 | Eng | Engineering including Computer Sciences | 300 selected candidates | 2026-06-09 |
 | Lif | Life Sciences | 300 selected candidates | 2026-06-09 |
-| Mat | Mathematics | 62 selected candidates | 2026-06-09 |
-| Phy | Physics | 148 selected candidates | 2026-06-09 |
+| Mat | Mathematics | 61 selected candidates | 2026-06-09 |
+| Phy | Physics | 147 selected candidates | 2026-06-09 |
 
-Total selected rows found: 1043.
+Total selected rows found: 1041.
 
 All selected people are saved in `ias_srfp2026_selected_people.csv`.
