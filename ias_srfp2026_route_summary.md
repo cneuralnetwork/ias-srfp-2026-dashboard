@@ -32,12 +32,12 @@ Conclusion: the candidate records are backend/server-rendered, not present as fr
 
 | Subject Code | Section | Route Result | Last Updated |
 | --- | --- | --- | --- |
-| Che | Chemistry | 177 selected candidates | 2026-06-22 |
+| Che | Chemistry | 177 selected candidates | 2026-06-23 |
 | Eps | Earth and Planetary Sciences | 49 selected candidates | 2026-06-22 |
 | Eng | Engineering including Computer Sciences | 300 selected candidates | 2026-06-23 |
-| Lif | Life Sciences | 300 selected candidates | 2026-06-22 |
+| Lif | Life Sciences | 300 selected candidates | 2026-06-23 |
 | Mat | Mathematics | 60 selected candidates | 2026-06-23 |
-| Phy | Physics | 144 selected candidates | 2026-06-22 |
+| Phy | Physics | 144 selected candidates | 2026-06-23 |
 
 Total selected rows found: 1030.
 
