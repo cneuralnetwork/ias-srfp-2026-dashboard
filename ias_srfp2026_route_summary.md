@@ -2,7 +2,7 @@
 
 Source page: https://webjapps.ias.ac.in/fellowship2026/lists/result1.jsp
 
-Site data version: 2026-07-29
+Site data version: 2026-07-30
 
 ## Frontend Route
 
@@ -37,7 +37,7 @@ Conclusion: the candidate records are backend/server-rendered, not present as fr
 | Eng | Engineering including Computer Sciences | 300 selected candidates | 2026-07-28 |
 | Lif | Life Sciences | 300 selected candidates | 2026-07-27 |
 | Mat | Mathematics | 60 selected candidates | 2026-07-27 |
-| Phy | Physics | 144 selected candidates | 2026-07-27 |
+| Phy | Physics | 144 selected candidates | 2026-07-30 |
 
 Total selected rows found: 1029.
 
