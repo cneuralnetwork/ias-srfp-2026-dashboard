@@ -34,9 +34,9 @@ Conclusion: the candidate records are backend/server-rendered, not present as fr
 | --- | --- | --- | --- |
 | Che | Chemistry | 176 selected candidates | 2026-07-29 |
 | Eps | Earth and Planetary Sciences | 49 selected candidates | 2026-07-08 |
-| Eng | Engineering including Computer Sciences | 300 selected candidates | 2026-07-28 |
+| Eng | Engineering including Computer Sciences | 300 selected candidates | 2026-07-30 |
 | Lif | Life Sciences | 300 selected candidates | 2026-07-27 |
-| Mat | Mathematics | 60 selected candidates | 2026-07-27 |
+| Mat | Mathematics | 60 selected candidates | 2026-07-30 |
 | Phy | Physics | 144 selected candidates | 2026-07-30 |
 
 Total selected rows found: 1029.
