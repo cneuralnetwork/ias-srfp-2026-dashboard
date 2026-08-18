@@ -37,7 +37,7 @@ Conclusion: the candidate records are backend/server-rendered, not present as fr
 | Eng | Engineering including Computer Sciences | 300 selected candidates | 2026-08-18 |
 | Lif | Life Sciences | 300 selected candidates | 2026-08-18 |
 | Mat | Mathematics | 60 selected candidates | 2026-08-18 |
-| Phy | Physics | 144 selected candidates | 2026-08-17 |
+| Phy | Physics | 144 selected candidates | 2026-08-18 |
 
 Total selected rows found: 1028.
 
